@@ -1,0 +1,36 @@
+- Fluxo de commit (Entenda commit como versão)
+
+A) ENVIAR UM PROJETO JÁ EM ANDAMENTO PARA UM NOVO REPOSITÓRIO GITHUB
+1) abre o terminal dentro da pasta do projeto
+2) git init (para gerar uma pasta oculta .git que contém as informações básicas da conexão)
+3) Acesse o Github e clique no botão verde "New". Preencha o formulário para configurar um novo projeto e guarde o nome do branch principal do projeto e a url do caminho do projeto no navegador. No próximo passo vamos colar essas informações no terminal
+3) git remote add <branch> <url>
+3) Executar o Fluxo B (Commitar o projeto --ou versionar o projeto)
+
+B) Como criar um commit (Gerando e enviando uma nova versão para o github)
+*) git status (mostra pra você o que falta para fechar a nova versão e enviar com sucesso para o servidor remoto)
+1) git add --all (enfileirar todos os novos arquivos adicionados no projeto para montar a nova versão)
+*) git status
+2) git commit -am "Você atribui uma mensagem que servirá de referência ou título para a sua nova versão"
+*) git status
+3) git push origin main ( git push é o comando que envia a nova versão para o github, origin sinaliza que o destino é o repositório remoto e main é o nome do 'branch' que você pode entender como ramificação. )
+3) Caso seja o primeiro push do repositório, adicione ao comando git push --set-upstream main master (--set-upstream informa que sempre que disparar git push puro, o alvo será o branch padrão do projeto. main é o nome do branch principal e master simboliza que sei lá kkkkk só sei que precisa dele pra funfar xD )
+
+----------------
+
+C) Como atualizar o projeto em seu ambiente local (Quando outra pessoa subiu uma nova versão - Etapa A - e você precisa atualizar seus arquivos)
+*) git status
+1) git fetch --all (Faz uma varredura no seu ambiente remoto e compara com seu ambiente local em busca de novos branchs --Novas Ramificações)
+2) git pull (puro vai atualizar seu ambiente local baseado na ramificação principal do seu projeto. geralmente com nome de master ou main.)
+2) git pull origin main (git pull com a tag origin significa que você vai atualizar seu projeto baseado no servidor remoto... e main é o nome da ramificação que vai servir de referência para seus arquivos locais)
+
+D) Baixar um novo projeto em seu ambiente local
+1) git clone url (A url no caso é a url do tipo ssh copiada na página do repositório)
+
+Recomendações: 
+Faça integração contínua... 
+Mantenha uma constância nos seus commits... 
+commit todo dia antes de encerrar o expediente...
+E faça um pull todo dia antes de começar a trabalhar, mesmo que o último commit seja o seu...
+Mantenha essa rotina como hábito. E se quiser faça commits ao longo do dia para manter as versões com poucos arquivos e códigos.
+Isso vai ajudar na hora de dar manutenção ou analisar uma versão anterior. 

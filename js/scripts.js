@@ -11,43 +11,49 @@ class Calculator {
 
     //add digit to calculator screen
     addDigit(digit) {
+        console.log(digit);
        //check if current operation already has a dot
       if (digit === "." && this.currentOperationText.innerText.includes(".")) {
         return;
        }
+
         this.currentOperation = digit;
         this.updateScreen();
     }
+
  //  Process all calculator operations
+
     processOperation(operation) {
+        
         // Check if current is empty
-        if(this.currentOperationText.innerText === " ") {
+        if (this.currentOperationText.innerText === "" && operation !== "C") {
             // Change operation
-            if(this.previousOperationText.innerText !== "") {
+            if (this.previousOperationText.innerText !== "") {
                 this.changeOperation(operation);
             }
             return;
         }
+
     // Get current and previous value
         let operationValue;
-        const previous = +this.previousOperationText.innerText.split(" ")[0];
-        const current = +this.currentOperationText.innerText;
+        let previous = +this.previousOperationText.innerText.split(" ")[0];
+        let current = +this.currentOperationText.innerText;
 
-        switch(operation) {
+        switch (operation) {
             case "+":
-                operationValue = previous + current
+                operationValue = previous + current;
                 this.updateScreen(operationValue, operation, current, previous);
                 break;
             case "-":
-                operationValue = previous + current
-                this.updateScreen(operationValue, operation, current, previous);
-                break;
-            case "/":
-                operationValue = previous + current
+                operationValue = previous - current;
                 this.updateScreen(operationValue, operation, current, previous);
                 break;
             case "*":
-                operationValue = previous + current
+                operationValue = previous * current;
+                this.updateScreen(operationValue, operation, current, previous);
+                break;
+            case "/":
+                operationValue = previous / current;
                 this.updateScreen(operationValue, operation, current, previous);
                 break;     
             case "DEL":
@@ -56,6 +62,12 @@ class Calculator {
             case "CE":
                this.processClearCurrentOperation();
                  break;
+            case "C":
+               this.processClearOperation();
+                 break;
+            case "=":
+                this.processEqualOperation();
+                break;    
             default:
                 return;
         }
@@ -68,16 +80,16 @@ class Calculator {
         current = null, 
         previous = null
     )  {
-
         if(operationValue === null) {
+            //Append number to current value
             this.currentOperationText.innerText += this.currentOperation;
         } else {
             // Check if value is zero, if it is just and current value
             if(previous === 0) {
-                operationValue = current
+                operationValue = current;
             }
             //add current value to previous
-            this.previousOperationText.innerText = `${operationValue} ${operation}`
+            this.previousOperationText.innerText = `${operationValue} ${operation}`;
             this.currentOperationText.innerText = "";
         }
     }
@@ -85,8 +97,8 @@ class Calculator {
  // Change math operation
  changeOperation(operation) {
      const mathOperations = ["*", "/", "+", "-"]
-        if(!mathOperations.includes(operations)) {
-            return
+        if(!mathOperations.includes(operation)) {
+            return;
         }
 
         this.previousOperationText.innerText = 
@@ -95,12 +107,26 @@ class Calculator {
 
     //Delete the last digit
     processDelOperator() {
-        this.currentOperationText.innerText = this.currentOperationText.innerText.slice(0, -1);
+        this.currentOperationText.innerText =
+         this.currentOperationText.innerText.slice(0, -1);
     }
 
     //Clear current operation
     processClearCurrentOperation() {
         this.currentOperationText.innerText = "";
+    }
+
+    //Clear all operations
+    processClearOperation() {
+        this.currentOperationText.innerText = "";
+        this.previousOperationText.innerText = "";
+    }
+
+    //Process an operation
+    processEqualOperation() {
+        let operation = this.previousOperationText.innerText.split(" ")[1];
+
+        this.processOperation(operation)
     }
 }
 
@@ -118,7 +144,7 @@ buttons.forEach((btn) => {
     });
 });
 
- /*window.addEventListener("keydown", (e) => {
+ window.addEventListener("keydown", (e) => {
     const value = e.key
 
     if(+value >= 0 || value === ".") {
@@ -131,4 +157,4 @@ buttons.forEach((btn) => {
         calc.processOperation("=")
         calc.processEqualOperator()
     }
-})*/
+})
